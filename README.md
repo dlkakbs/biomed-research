@@ -2,10 +2,9 @@
 
 Agentic biomedical research workflow for repurposing analysis, built around real payment rails.
 
-Built for the Agentic Economy on Arc 
-Hackathon
+## Built for the Agentic Economy on Arc Hackathon
 
-Categories:
+# Categories:
 - `Usage-Based Compute Billing`
 - `Real-Time Micro-Commerce Flow`
 
@@ -17,22 +16,28 @@ Categories:
 
 The product turns a user research request into a multi-stage economic workflow:
 
-- the user opens an ERC-8183 job on Arc
-- the PI agent orchestrates paid evidence-gathering steps through x402
+It uses Arc, Circle Gateway, x402, and ERC-8183 to make those steps economically practical:
+
+- `x402` provides paid API-style access to research steps
+- `Circle Gateway` enables gasless authorization and batched settlement for many low-value USDC payments
+- `Arc` provides fast finality and a USDC-native flow for this coordination model
+- `ERC-8183` gives the outer client-provider-evaluator job lifecycle: create, fund, submit, complete, reject
+
+- The user opens an ERC-8183 job on Arc
+- The PI agent orchestrates paid evidence-gathering steps through x402
 - Circle Gateway batches low-value USDC nanopayments on Arc
-- the system assembles, reviews, and either delivers or rejects the report
-- if the report is approved, the internal agent budget is distributed on completion
+- The system assembles, reviews, and either delivers or rejects the report
+- If the report is approved, the internal agent budget is distributed on completion
 
 Veliora is a payment-aware research pipeline with traceable evidence, peer review, and onchain job settlement.
 
-## What Veliora Does
+## What Veliora does?
 
 The user submits a disease-focused research query and funds a job budget in USDC. The system then runs a coordinated biomedical workflow across literature mining, drug-database screening, pathway anchoring, hypothesis generation, evidence scoring, red-team review, and final report synthesis.
 
 The output is a research brief, not a treatment recommendation. Reports are designed to be selective: a run can produce a shortlist, a weaker early-stage hypothesis, or no deliverable signal at all. If nothing crosses the quality bar, the run is rejected and the escrow is refunded onchain.
 
-## Why Veliroa Exists
-
+## Problem/Value
 Biomedical research workflows involve many specialized but coordination-heavy steps:
 
 - retrieving and filtering literature
@@ -41,13 +46,6 @@ Biomedical research workflows involve many specialized but coordination-heavy st
 - running independent critique and review
 
 Traditional payment rails are awkward for this because every small service action becomes too expensive or too operationally heavy to settle.
-
-This project uses Arc, Circle Gateway, x402, and ERC-8183 to make those steps economically practical:
-
-- `x402` provides paid API-style access to research steps
-- `Circle Gateway` enables gasless authorization and batched settlement for many low-value USDC payments
-- `Arc` provides fast finality and a USDC-native flow for this coordination model
-- `ERC-8183` gives the outer client-provider-evaluator job lifecycle: create, fund, submit, complete, reject
 
 ## Why Arc + Circle
 
