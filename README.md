@@ -1,6 +1,13 @@
-# BioMed Research
+# BioMed Research Engine: Veliora
 
 Agentic biomedical research workflow for repurposing analysis, built around real payment rails.
+
+Built for the Agentic Economy on Arc 
+Hackathon
+
+Categories:
+- `Usage-Based Compute Billing`
+- `Real-Time Micro-Commerce Flow`
 
 ## TL;DR
 
@@ -16,24 +23,24 @@ The product turns a user research request into a multi-stage economic workflow:
 - the system assembles, reviews, and either delivers or rejects the report
 - if the report is approved, the internal agent budget is distributed on completion
 
-This is not a chat demo. It is a payment-aware research pipeline with traceable evidence, peer review, and onchain job settlement.
+Veliora is a payment-aware research pipeline with traceable evidence, peer review, and onchain job settlement.
 
-## What The Product Does
+## What Veliora Does
 
 The user submits a disease-focused research query and funds a job budget in USDC. The system then runs a coordinated biomedical workflow across literature mining, drug-database screening, pathway anchoring, hypothesis generation, evidence scoring, red-team review, and final report synthesis.
 
 The output is a research brief, not a treatment recommendation. Reports are designed to be selective: a run can produce a shortlist, a weaker early-stage hypothesis, or no deliverable signal at all. If nothing crosses the quality bar, the run is rejected and the escrow is refunded onchain.
 
-## Why This Exists
+## Why Veliroa Exists
 
-Biomedical research workflows have many low-value but high-friction steps:
+Biomedical research workflows involve many specialized but coordination-heavy steps:
 
 - retrieving and filtering literature
 - screening candidate molecules and targets
 - anchoring candidates to disease biology
 - running independent critique and review
 
-Traditional payment rails are awkward for this because every small service action becomes too expensive or too operationally heavy to settle individually.
+Traditional payment rails are awkward for this because every small service action becomes too expensive or too operationally heavy to settle.
 
 This project uses Arc, Circle Gateway, x402, and ERC-8183 to make those steps economically practical:
 
@@ -44,7 +51,7 @@ This project uses Arc, Circle Gateway, x402, and ERC-8183 to make those steps ec
 
 ## Why Arc + Circle
 
-This stack was chosen for product reasons, not just protocol novelty.
+This stack was chosen for product reasons.
 
 - `Per-action research economics`
   The workflow breaks research into multiple paid steps. Circle Gateway batching keeps those steps practical instead of requiring every micropayment to settle as an expensive standalone transaction.
@@ -60,7 +67,7 @@ This stack was chosen for product reasons, not just protocol novelty.
 
 ## Execution Proof
 
-This workflow was exercised as a real paid batch, not only as a mocked UI demo.
+This workflow was exercised as a real paid batch.
 
 In one proof batch:
 
@@ -74,8 +81,6 @@ In one proof batch:
 
 This is the intended operating model of the product:
 an escrowed client job on Arc, PI-orchestrated paid research steps through x402 + Circle Gateway, and final settlement through ERC-8183.
-
-For jury-facing materials, the lifecycle count above follows the visible product flow shown in the app and developer console. Client-side token approval can exist at the wallet layer, but it is not counted in the visible workflow totals above.
 
 ## Agent System
 
@@ -137,7 +142,7 @@ PI Agent / Orchestrator (Dr. Iris)
   |
   +-------------------------------> Red-Team Seller
   |
-  +-------------------------------> Evaluator / Review Seller
+  +-------------------------------> Review Seller
   |
   +-------------------------------> Repurposing (internal)
   |
@@ -181,7 +186,7 @@ The end-to-end flow is:
    The report stage converts the run into a structured brief with methodology, evidence trace, candidate rationale, and limitations.
 
 7. `Peer review`
-   The evaluator approves or rejects the report.
+   The reviewer approves or rejects the report.
 
 8. `Submit + finalize onchain`
    If approved, the provider submits the report digest and the finalizer completes the ERC-8183 job.
@@ -219,8 +224,6 @@ In the codebase, the default nanopayment price is:
 
 - `0.002 USDC` per paid action
 
-That value lives in [packages/shared/src/constants/payment.ts](/Users/dilekakbas/Desktop/biomed-research/packages/shared/src/constants/payment.ts:16).
-
 ### 2. Internal budget distribution after a successful run
 
 After an approved report is completed onchain, the system can distribute internal payouts from the PI wallet to selected internal agents:
@@ -238,28 +241,6 @@ These payouts are not the same thing as x402 seller payments. They are internal 
 
 The PI reserve is configurable through `PI_PAYOUT_RESERVE_BPS`, so the full budget is not blindly redistributed.
 
-## Who Pays Whom
-
-At a high level:
-
-- `Client -> ERC-8183 escrow`
-  funds the outer research job
-
-- `PI agent -> x402 sellers`
-  pays for literature, DrugDB, pathway, red-team, and review services through Circle Gateway
-
-- `Finalizer -> ERC-8183 resolution`
-  completes or rejects the job onchain after review
-
-- `PI wallet -> internal agents`
-  distributes post-run internal payouts only after successful completion
-
-If the report fails the quality gate:
-
-- the run is marked rejected
-- the escrow is refunded onchain
-- internal payouts are skipped
-
 ## Report Policy
 
 The system is intentionally selective.
@@ -273,9 +254,9 @@ The system is intentionally selective.
 - `No reportable candidate and no early-stage hypothesis`
   reject and refund
 
-This matters because the product is designed to look like a serious research workflow, not a system that always fabricates an answer.
+This matters because the product is designed to look like a serious research workflow.
 
-The quality bar used to judge report defensibility is summarized in [REPORT_QUALITY_RUBRIC.md](/Users/dilekakbas/Desktop/biomed-research/REPORT_QUALITY_RUBRIC.md:1).
+The quality bar used to judge report defensibility is summarized in [REPORT_QUALITY_RUBRIC.md]
 
 ## Evidence Model
 
@@ -289,132 +270,5 @@ The report layer uses a structured scoring rubric across:
 
 Genetic support is used as disease-biology context, not as causal proof or target validation. Outputs are prioritization-grade research artifacts and explicitly not medical advice.
 
-## Repository Structure
 
-- `apps/web`
-  Next.js frontend, landing page, dashboard, workspace, and results UI
 
-- `apps/api`
-  API server, paid endpoints, orchestration entrypoints, and batch/debug scripts
-
-- `packages/agents`
-  specialized research service clients and stage implementations
-
-- `packages/orchestration`
-  pipeline control, report assembly, safety checks, and payout flow
-
-- `packages/payments`
-  Arc, Circle Gateway, wallet registry, x402 auth, and ERC-8183 contract integration
-
-- `packages/db`
-  SQLite state, reports, events, funding transactions, and payout records
-
-- `packages/gateway-seller`
-  seller catalog and live x402 challenge / verification logic
-
-- `packages/shared`
-  shared constants and types
-
-## Deployment Model
-
-The intended hosted setup is:
-
-- `Vercel`
-  frontend deployment for `apps/web`
-
-- `Railway`
-  API deployment for `apps/api`
-
-Recommended production shape:
-
-- deploy the web app on Vercel
-- deploy the API on Railway
-- point `NEXT_PUBLIC_API_URL` to the Railway API
-- keep SQLite and `reports/` on a persistent Railway volume, or replace them with managed storage if you want multi-instance durability
-
-## Demo Data
-
-The repo includes sanitized example data under [examples/README.md](/Users/dilekakbas/Desktop/biomed-research/examples/README.md:1).
-
-Use this for demos and jury walkthroughs instead of committing:
-
-- real local databases
-- generated reports
-- wallet-specific state
-- personal notes
-
-The seed command is:
-
-```bash
-npm run seed:demo
-```
-
-This creates a safe demo job without shipping secrets or local runtime artifacts into the repository.
-
-## Development
-
-Install dependencies:
-
-```bash
-npm install
-```
-
-Run the API:
-
-```bash
-npm run dev:api
-```
-
-Run the web app:
-
-```bash
-npm run dev:web
-```
-
-Seed a sanitized demo task:
-
-```bash
-npm run seed:demo
-```
-
-Typecheck all workspaces:
-
-```bash
-npm run typecheck
-```
-
-Register current identity roles:
-
-```bash
-npm run register:identity
-```
-
-## Environment
-
-Use [.env.example](/Users/dilekakbas/Desktop/biomed-research/.env.example:1) as the template.
-
-The main configuration groups are:
-
-- Arc RPC and chain config
-- Circle API and wallet config
-- agent wallet addresses
-- API/web URLs
-- research provider keys
-- local DB and reports paths
-
-Do not commit:
-
-- `.env` or `.env.local`
-- sqlite database files
-- generated `reports/`
-- `.next/`, `dist/`, `node_modules/`, or `*.tsbuildinfo`
-- personal notes, screenshots, or local artifacts
-
-## Safety
-
-This system is for research prioritization only.
-
-- it does not provide medical advice
-- it does not claim target validation
-- it does not claim treatment efficacy
-- every output is expected to be reviewed by qualified researchers before use
