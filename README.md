@@ -1,119 +1,107 @@
-# BioMed Research Engine: Veliora
+# Veliora
 
-Agentic biomedical research workflow for repurposing analysis, built around real payment rails.
+Agentic biomedical research workflow for drug repurposing analysis, powered by programmable payment rails.
 
-# Built for the Agentic Economy on Arc Hackathon
+Built for the **Agentic Economy on Arc Hackathon**  
+Categories:
+- Usage-Based Compute Billing
+- Real-Time Micro-Commerce Flow
 
- Categories:
-- `Usage-Based Compute Billing`
-- `Real-Time Micro-Commerce Flow`
+---
 
-## TL;DR
+## Overview
 
-- Multi-agent biomedical research pipeline for repurposing analysis
-- Uses x402 + Circle Gateway for paid low-value research actions and ERC-8183 on Arc for outer job escrow and resolution
-- Produces selective research briefs with peer review, delivery gating, and refund-on-rejection behavior
+Veliora is a multi-agent biomedical research system that turns a disease-focused query into a structured repurposing analysis workflow.
 
-The product turns a user research request into a multi-stage economic workflow:
+A user funds a research job in **USDC**, and the system coordinates multiple specialist agents across literature mining, drug database screening, pathway analysis, hypothesis generation, evidence scoring, red-team review, and final report synthesis.
 
-It uses Arc, Circle Gateway, x402, and ERC-8183 to make those steps economically practical:
+The result is a **research brief**, not a treatment recommendation.
 
-- `x402` provides paid API-style access to research steps
-- `Circle Gateway` enables gasless authorization and batched settlement for many low-value USDC payments
-- `Arc` provides fast finality and a USDC-native flow for this coordination model
-- `ERC-8183` gives the outer client-provider-evaluator job lifecycle: create, fund, submit, complete, reject
+Veliora is designed to be selective:
+- it may return a strong shortlist,
+- a weaker exploratory hypothesis,
+- or no deliverable at all.
 
-- The user opens an ERC-8183 job on Arc
-- The PI agent orchestrates paid evidence-gathering steps through x402
-- Circle Gateway batches low-value USDC nanopayments on Arc
-- The system assembles, reviews, and either delivers or rejects the report
-- If the report is approved, the internal agent budget is distributed on completion
+If the output does not pass review, the job is rejected and the escrow is refunded onchain.
 
-Veliora is a payment-aware research pipeline with traceable evidence, peer review, and onchain job settlement.
+---
 
-## What Veliora does?
+## Problem
 
-The user submits a disease-focused research query and funds a job budget in USDC. The system then runs a coordinated biomedical workflow across literature mining, drug-database screening, pathway anchoring, hypothesis generation, evidence scoring, red-team review, and final report synthesis.
+Biomedical research workflows are expensive to coordinate because they are made up of many small, specialized steps such as:
 
-The output is a research brief, not a treatment recommendation. Reports are designed to be selective: a run can produce a shortlist, a weaker early-stage hypothesis, or no deliverable signal at all. If nothing crosses the quality bar, the run is rejected and the escrow is refunded onchain.
+- retrieving and filtering literature,
+- screening candidate drugs and targets,
+- anchoring candidates to disease biology,
+- scoring evidence quality,
+- and running independent review.
 
-## Problem/Value
-Biomedical research workflows involve many specialized but coordination-heavy steps:
+These steps are often too fragmented for traditional payment rails.
 
-- retrieving and filtering literature
-- screening candidate molecules and targets
-- anchoring candidates to disease biology
-- running independent critique and review
+Paying for each small research action individually is usually:
+- operationally heavy,
+- too expensive for low-value actions,
+- and difficult to audit across a multi-stage workflow.
 
-Traditional payment rails are awkward for this because every small service action becomes too expensive or too operationally heavy to settle.
+As a result, it is hard to build a research pipeline where many agents or services can be paid fairly and efficiently per action.
 
-## Why Arc + Circle
+---
 
-This stack was chosen for product reasons.
+## Solution
 
-- `Per-action research economics`
-  The workflow breaks research into multiple paid steps. Circle Gateway batching keeps those steps practical instead of requiring every micropayment to settle as an expensive standalone transaction.
+Veliora solves this by combining an **agentic research workflow** with a **two-layer payment architecture**:
 
-- `USDC-native coordination`
-  Buyers authorize payments in USDC. The workflow does not need to force users into a separate volatile gas-token UX for every research action.
+- **ERC-8183 on Arc** manages the outer job lifecycle:
+  create, fund, submit, complete, or reject.
+- **x402 + Circle Gateway** handle low-value paid research actions inside the workflow.
+- **Arc** provides fast finality and a USDC-native coordination layer.
 
-- `Fast finality for sequential agents`
-  A research run contains many dependent stages. Faster confirmation reduces dead time between steps.
+This lets Veliora support:
+- escrowed research jobs,
+- paid per-step external services,
+- traceable evidence collection,
+- peer review before delivery,
+- and refund-on-rejection behavior.
 
-- `Clear outer escrow lifecycle`
-  ERC-8183 is used for the higher-level marketplace contract: the client funds a job, the provider submits a result digest, and the evaluator/finalizer resolves completion or rejection.
+In short, Veliora makes multi-step biomedical research economically practical.
 
-## Execution Proof
+---
 
-This workflow was exercised as a real paid batch.
+## Use Case
 
-In one proof batch:
+A user submits a disease-focused research question such as:
 
-- `10` research jobs were executed end to end
-- each job moved through the visible ERC-8183 lifecycle:
-  `create -> setBudget -> fund -> submit -> complete|reject`
-- this produced `50` visible lifecycle actions across the batch
-- each job also triggered `5` x402-paid research actions
-- this produced `50` offchain paid actions across the batch
-- each paid action used the configured nanopayment price of `0.002 USDC`
+> “What repurposable compounds may be relevant for this disease area based on literature, pathway context, and known targets?”
 
-This is the intended operating model of the product:
-an escrowed client job on Arc, PI-orchestrated paid research steps through x402 + Circle Gateway, and final settlement through ERC-8183.
+The workflow then:
 
-## Agent System
+1. creates and funds a research job in USDC,
+2. dispatches specialist agents,
+3. pays external research services as needed,
+4. synthesizes candidate hypotheses,
+5. evaluates evidence strength,
+6. runs adversarial review,
+7. prepares a final research brief,
+8. and either delivers or rejects the result.
 
-The pipeline is presented in-product as named specialist agents:
+### Example output behavior
 
-- `Dr. Iris · PI Agent`
-  Research orchestrator. Dispatches the workflow, pays for external research services, tracks status, and manages delivery/rejection.
+- **Strong evidence + review approval**  
+  A report is delivered and the job is completed.
 
-- `Dr. Mira · Literature`
-  Mines PubMed/OpenAlex-style literature inputs, filters papers, and returns prioritized evidence with provenance.
+- **Weak but still interesting signal**  
+  A report may still be delivered, but clearly labeled as exploratory.
 
-- `Dr. Rex · DrugDB`
-  Screens ChEMBL, target, and candidate-molecule context.
+- **No defensible signal**  
+  The job is rejected and the client escrow is refunded.
 
-- `Dr. Nova · Pathway`
-  Anchors the run in disease biology using pathway, target, genetic, and trial context.
+---
 
-- `Dr. Spark · Repurposing`
-  Converts upstream evidence into candidate hypotheses and filters weak or non-reportable ideas.
+## System Architecture
 
-- `Dr. Vera · Evidence`
-  Applies structured scoring across literature support, biology overlap, clinical evidence, safety, and genetic context.
+Veliora is built as a payment-aware multi-agent research pipeline.
 
-- `Dr. Vale · Red Team`
-  Performs adversarial review and surfaces failure modes, limitations, and disconfirming tests.
-
-- `Dr. Aria · Report`
-  Produces the final research brief and prepares the delivery package.
-
-- `Review I / Review II / Tiebreak`
-  Peer-review layer. The evaluator stage determines whether the output is approved for delivery or rejected.
-
-## Pipeline
-
-## Architecture At A Glance
+### High-level flow
 
 ```text
 Client Wallet
@@ -122,151 +110,203 @@ Client Wallet
   v
 ERC-8183 Job on Arc
   |
-  | 2. setBudget (PI)
-  | 3. approve USDC (client)
-  | 4. fund (client)
+  | 2. setBudget
+  | 3. approve USDC
+  | 4. fund
   v
 Escrowed Research Job
   |
   v
 PI Agent / Orchestrator (Dr. Iris)
   |
-  |  x402 request -> 402 challenge -> Circle Gateway auth -> paid replay
-  +-------------------------------> Literature Seller
+  +--> Literature Agent / Seller
+  +--> DrugDB Agent / Seller
+  +--> Pathway Agent / Seller
+  +--> Red-Team Agent / Seller
+  +--> Review Agent / Seller
+  +--> Internal Repurposing
+  +--> Internal Evidence Scoring
+  +--> Internal Report Synthesis
   |
-  +-------------------------------> DrugDB Seller
-  |
-  +-------------------------------> Pathway Seller
-  |
-  +-------------------------------> Red-Team Seller
-  |
-  +-------------------------------> Review Seller
-  |
-  +-------------------------------> Repurposing (internal)
-  |
-  +-------------------------------> Evidence Scoring (internal)
-  |
-  +-------------------------------> Report Synthesis (internal)
-  |
-  | 5. submit(reportDigest) if approved
+  | 5. submit(reportDigest)
   v
 Finalizer
   |
-  +--> 6a. complete -> client escrow released -> internal payouts
+  +--> complete -> escrow released -> internal payouts
   |
-  +--> 6b. reject   -> escrow refunded -> no internal payouts
-
-Circle Gateway layer:
-  - PI maintains a pre-funded Gateway USDC balance
-  - each x402 authorization is signed offchain
-  - Gateway batches settlement onchain on Arc
+  +--> reject   -> escrow refunded
 ```
 
-The end-to-end flow is:
+### Agent roles
 
-1. `Create job`
-   The client creates an ERC-8183 job on Arc.
+- **Dr. Iris · PI Agent**  
+  Orchestrates the workflow, manages paid service calls, tracks progress, and handles submission or rejection.
 
-2. `Set budget`
-   The PI side sets the budget parameters for the run.
+- **Dr. Mira · Literature**  
+  Mines and prioritizes literature evidence.
 
-3. `Approve + fund`
-   The client approves USDC and funds the escrowed job.
+- **Dr. Rex · DrugDB**  
+  Screens drug, target, and candidate-molecule context.
 
-4. `Run paid research services`
-   The PI agent calls paid research endpoints through x402:
-   literature, DrugDB, pathway, red-team, and review.
+- **Dr. Nova · Pathway**  
+  Anchors the analysis in disease biology.
 
-5. `Generate hypotheses`
-   Repurposing and evidence stages synthesize candidate signals and score them.
+- **Dr. Spark · Repurposing**  
+  Generates and filters candidate hypotheses.
 
-6. `Assemble report`
-   The report stage converts the run into a structured brief with methodology, evidence trace, candidate rationale, and limitations.
+- **Dr. Vera · Evidence**  
+  Scores evidence across literature, biology, clinical signal, safety, and genetics.
 
-7. `Peer review`
-   The reviewer approves or rejects the report.
+- **Dr. Vale · Red Team**  
+  Performs adversarial review and surfaces weaknesses.
 
-8. `Submit + finalize onchain`
-   If approved, the provider submits the report digest and the finalizer completes the ERC-8183 job.
-   If rejected, the finalizer rejects the job and the escrow is refunded.
+- **Dr. Aria · Report**  
+  Produces the final research brief.
 
-9. `Internal payouts`
-   On successful completion, a portion of the budget is distributed internally to downstream agents based on recorded contribution and risk weights.
+- **Review I / Review II / Tiebreak**  
+  Final peer-review layer that determines approval or rejection.
+
+---
 
 ## Payment Architecture
 
-There are two distinct payment layers in the system.
+Veliora uses **two distinct payment layers**.
 
-### 1. External service payments via x402 + Circle Gateway
+### 1) External service payments
+Handled through **x402 + Circle Gateway**
 
-The PI agent is the buyer for the research services. It pays for:
+The PI agent pays for external research actions such as:
+- literature retrieval,
+- DrugDB screening,
+- pathway analysis,
+- red-team review,
+- evaluator review.
 
-- literature retrieval
-- DrugDB screening
-- pathway analysis
-- red-team review
-- evaluator review
+Flow:
+1. request paid resource,
+2. receive `402 Payment Required`,
+3. sign Circle Gateway authorization,
+4. replay request with payment payload,
+5. settle batched payments later on Arc.
 
-These calls are made through `/api/paid/*` endpoints. The seller side returns an x402 challenge, the PI signs a Circle Gateway authorization, and the request is replayed with a payment signature. Settlement is batched under the Gateway flow on Arc.
+This makes low-value research actions economically feasible.
 
-Operationally, this assumes the PI has already deposited USDC into a Gateway balance. Circle’s documented Gateway nanopayment flow is:
-
-- deposit USDC into Gateway once
-- request a paid resource
-- receive `402 Payment Required`
-- sign an offchain EIP-3009 authorization
-- replay the request with the payment payload
-- let Gateway batch settlement onchain later
-
-In the codebase, the default nanopayment price is:
-
+**Configured default nanopayment:**  
 - `0.002 USDC` per paid action
 
-### 2. Internal budget distribution after a successful run
+### 2) Internal budget distribution
+Handled after successful completion
 
-After an approved report is completed onchain, the system can distribute internal payouts from the PI wallet to selected internal agents:
+Once a report is approved and the job is completed onchain, budget can be distributed internally to downstream agents such as:
+- repurposing,
+- evidence,
+- report.
 
-- `repurposing`
-- `evidence`
-- `report`
+These payouts are computed using:
+- base cost,
+- contribution weight,
+- risk weight,
+- payout weight.
 
-These payouts are not the same thing as x402 seller payments. They are internal post-run budget allocations computed from:
+This is separate from the x402 seller payment layer.
 
-- base cost
-- contribution weight
-- risk weight
-- payout weight
+---
 
-The PI reserve is configurable through `PI_PAYOUT_RESERVE_BPS`, so the full budget is not blindly redistributed.
+## Tech Stack
 
-## Report Policy
+### Blockchain / Settlement
+- **Arc**  
+  Fast finality and USDC-native coordination
+- **ERC-8183**  
+  Job escrow and resolution lifecycle
+- **USDC**  
+  Funding and settlement currency
 
-The system is intentionally selective.
+### Payment Infrastructure
+- **Circle Gateway**  
+  Gasless authorization and batched nanopayment settlement
+- **x402**  
+  Paid API-style access to research actions
 
-- `Reportable shortlist present`
-  deliverable
+### Research Workflow
+- Multi-agent orchestration
+- Literature mining
+- Drug database screening
+- Pathway analysis
+- Hypothesis generation
+- Evidence scoring
+- Red-team review
+- Final report synthesis
 
-- `Only early-stage hypothesis present`
-  still deliverable, but explicitly labeled as weaker and exploratory
+### Output / Evaluation Layer
+- Peer review
+- Delivery gating
+- Refund-on-rejection logic
+- Structured research brief generation
 
-- `No reportable candidate and no early-stage hypothesis`
-  reject and refund
-
-This matters because the product is designed to look like a serious research workflow.
-
-The quality bar used to judge report defensibility is summarized in [REPORT_QUALITY_RUBRIC.md]
+---
 
 ## Evidence Model
 
-The report layer uses a structured scoring rubric across:
+Veliora uses a structured evidence rubric across:
 
-- literature support
-- biology overlap
-- clinical evidence
-- safety profile
-- genetic context
+- literature support,
+- biology overlap,
+- clinical evidence,
+- safety profile,
+- genetic context.
 
-Genetic support is used as disease-biology context, not as causal proof or target validation. Outputs are prioritization-grade research artifacts and explicitly not medical advice.
+Genetic evidence is used as disease-biology context, not as causal proof or medical validation.
 
+Outputs are **research prioritization artifacts**, not medical advice.
+
+The full evaluation criteria and scoring thresholds are defined in [REPORT_QUALITY_RUBRIC.md].
+---
+
+## Report Policy
+
+Veliora is intentionally selective.
+
+### Deliverable
+- A reportable shortlist exists
+
+### Conditionally deliverable
+- Only an early-stage hypothesis exists, but it is clearly labeled as exploratory
+
+### Reject
+- No reportable candidate
+- No meaningful early-stage hypothesis
+- Review does not approve the report
+
+If rejected, the escrow is refunded onchain.
+
+---
+
+## Why Veliora Matters
+
+Veliora demonstrates that biomedical research workflows can be:
+
+- modular,
+- agent-driven,
+- economically coordinated,
+- payment-aware,
+- and auditable end to end.
+
+Instead of treating research as a single opaque service, Veliora breaks it into specialized paid actions while preserving delivery control, review quality, and settlement logic.
+
+This makes it a strong example of how agentic systems can support real-world, low-value, high-frequency knowledge work.
+
+---
+
+## Summary
+
+Veliora is a payment-aware, multi-agent biomedical research pipeline for drug repurposing analysis.
+
+It combines:
+- **ERC-8183** for escrowed research jobs,
+- **x402 + Circle Gateway** for paid low-value research actions,
+- and **Arc** for final settlement and coordination.
+
+The result is a system that can gather evidence, review it, and either deliver a structured brief or reject the run and refund the user.
 
 
