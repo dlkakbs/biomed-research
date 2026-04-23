@@ -54,30 +54,32 @@ Red flags:
 ### 3. Candidate Legitimacy
 
 Question:
-Is the proposed candidate grounded in real disease/mechanism context, or is it generic expansion noise?
+Is the surfaced candidate, early-stage hypothesis, or pipeline-reviewed signal grounded in real disease/mechanism context, or is it generic expansion noise?
 
 High score:
-- candidate has disease-specific or target-linked rationale
+- candidate / hypothesis / signal has disease-specific or target-linked rationale
 - indication/mechanism context is visible
 - not just a generic database artifact
 
 Red flags:
 - opaque candidate with no meaningful disease anchor
-- candidate appears only because a target was loosely matched
+- surfaced signal appears only because a target was loosely matched
 
 ### 4. Evidence Honesty
 
 Question:
-Does the report clearly distinguish disease-context evidence from candidate-specific evidence?
+Does the report clearly distinguish disease-context evidence from candidate-specific evidence, and does it label exploratory outputs honestly?
 
 High score:
 - candidate-specific support is stated accurately
 - uncertainty is visible
 - disease papers are not overclaimed as validation for the candidate
+- pipeline-reviewed signals are clearly labeled as exploratory rather than shortlist-level findings
 
 Red flags:
 - disease literature is presented as if it directly validates the candidate
 - weak evidence is written with high confidence
+- exploratory signals are framed as if they were final reportable candidates
 
 ### 5. No-Hit Behavior
 
@@ -87,11 +89,13 @@ If the run has no strong repurposing signal, does the report say so honestly?
 High score:
 - no-hit or weak-hit state is explicit
 - report does not invent a fallback candidate
+- if no scored shortlist exists, the output is either a clean reject or clearly exploratory pipeline-reviewed signals
 - limitations are visible
 
 Red flags:
 - forced top candidate despite weak upstream support
 - report sounds decisive when the pipeline is actually empty
+- exploratory signals are used to imply that a scored shortlist existed when it did not
 
 ### 6. Redundancy Control
 
@@ -116,10 +120,12 @@ High score:
 - suggests concrete next validation directions
 - points to target, assay, biomarker, or mechanism follow-up
 - useful even when the answer is "not enough evidence"
+- if the output is exploratory, the next-step suggestion stays narrow and appropriately cautious
 
 Red flags:
 - purely descriptive summary
 - no clear next-step signal
+- exploratory outputs imply a stronger translational path than the evidence supports
 
 ## Expected Score by Scenario
 
@@ -138,7 +144,8 @@ Expected:
 - honesty score should be high
 
 Interpretation:
-- a good report here is often conservative, not exciting
+- a good output here is often conservative, not exciting
+- acceptable outcomes include a clean reject, a narrow early-stage hypothesis, or clearly labeled pipeline-reviewed signals
 
 ### Broad / Common Disease
 
@@ -155,8 +162,9 @@ If any of these appear, the report likely needs manual skepticism:
 
 - generic umbrella paper is near the top
 - candidate-specific evidence is absent
-- disease, pathway, and candidate do not connect cleanly
+- disease, pathway, and surfaced candidate / signal do not connect cleanly
 - no-hit run still produces a confident top candidate
+- no-shortlist run presents exploratory signals as if they were final candidates
 - old exact-title reviews dominate the paper list
 
 ## Practical Use
@@ -174,4 +182,4 @@ For regression checks:
 
 - compare the same query across revisions
 - do not only compare top candidate presence
-- compare honesty, literature precision, and redundancy control too
+- compare honesty, literature precision, redundancy control, and output framing too
