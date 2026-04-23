@@ -172,7 +172,7 @@ Veliora operates across three layers:
    PI agent orchestrates the funded workflow across literature, DrugDB, pathway, repurposing, evidence, red-team critique, report synthesis, and peer review.
 
 - **Resolution Layer**  
-  Evaluator completes or rejects the job and triggers settlement or refund  
+  Evaluator completes or rejects the job and triggers escrow payout or refund  
 
 ### Sequence Diagram
 
@@ -232,7 +232,6 @@ sequenceDiagram
 - **Pathway**  
   Uses **Open Targets** plus linked pathway, genetic, and active clinical-trial context, including **ClinicalTrials.gov** references where available.
 
-
 ---
 
 ## Payment Architecture
@@ -243,7 +242,7 @@ Veliora separates payments into three layers:
 
 - Client funds job in USDC  
 - Evaluator completes or rejects  
-- Approved jobs trigger settlement  
+- Approved jobs trigger escrow payout
 - Rejected jobs are refunded  
 
 ---
@@ -254,23 +253,28 @@ Used during execution for:
 - literature retrieval  
 - DrugDB queries  
 - pathway analysis  
-- critique/review steps  
+- read team critique
+- peer review
 
 Flow:
-1. request resource  
-2. receive `402 Payment Required`  
-3. sign authorization  
-4. replay with payment  
-5. batched settlement on Arc  
+
+1. request resource
+2. receive `x402 Payment Required`
+3. sign authorization
+4. replay with payment
+5. seller verifies payment and serves the resource
+6. Gateway batches authorizations and settles them on Arc
 
 **Price:** `0.002 USDC` per action  
+
+- Design note: Repurposing, evidence scoring, and report synthesis remain in the core orchestration layer.
 
 ---
 
 ### 3. Internal Payouts
 
 - Triggered after successful completion  
-- Distributed based on contribution and risk  
+- Distributed across based on contribution 
 - Not executed for rejected jobs  
 
 ---
