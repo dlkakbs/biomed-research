@@ -2,6 +2,8 @@
 
 Agentic biomedical research workflow for drug repurposing analysis, powered by programmable payment rails.
 
+![Veliora cover](docs/assets/veliora-cover-v5.png)
+
 Built for the **Agentic Economy on Arc Hackathon**  
 Categories:
 - Usage-Based Compute Billing
@@ -12,8 +14,8 @@ Categories:
 ## Live Links
 
 - Live app: `TODO`
-- Demo video: `TODO`
-- Slides PDF: `TODO`
+- Demo video: [Velioravideo.mp4](docs/assets/Velioravideo.mp4)
+- Slides PDF: [veliora.pdf](docs/assets/veliora.pdf)
 
 ---
 
@@ -103,6 +105,30 @@ The system:
 - **Strong signal** → report delivered  
 - **Weak signal** → exploratory report  
 - **No defensible result** → rejected + refunded  
+
+---
+
+## Screenshots
+
+### Workspace — Approved Delivery
+
+![Veliora workspace approved](docs/assets/workspace-completedtask.png)
+
+### Workspace — Rejected / Refunded
+
+![Veliora workspace rejected](docs/assets/workspace-taskrejected.png)
+
+### Report Summary
+
+![Veliora summary](docs/assets/reportsummary.png)
+
+### Methodology
+
+![Veliora methodology](docs/assets/reportmethodology.png)
+
+### Report Sections
+
+![Veliora report sections](docs/assets/reportsections.png)
 
 ---
 
