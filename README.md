@@ -10,6 +10,43 @@ Categories:
 | Usage-Based Compute Billing |
 | Real-Time Micro-Commerce Flow |
 
+## Live Assets
+
+Add your final public links here before submission:
+
+| Asset | Link |
+| --- | --- |
+| Live app | `TODO` |
+| Demo video | `TODO` |
+| Slides PDF | `TODO` |
+
+## Key Features
+
+| Feature | What it means |
+| --- | --- |
+| Escrowed research jobs | A client funds a biomedical research job in USDC and the lifecycle is resolved through ERC-8183 on Arc. |
+| Paid per-step execution | The PI agent pays external research actions through x402 + Circle Gateway instead of treating the workflow as one opaque backend call. |
+| Review-gated delivery | A report is delivered only after synthesis, evidence scoring, adversarial review, and peer review. |
+| Refund-on-rejection | If the output is not defensible, the report is rejected and escrow is refunded onchain. |
+| Traceable evidence workflow | Literature, DrugDB, pathway, repurposing, evidence, red-team, and report stages are visible as a coherent pipeline. |
+| Selective report policy | Veliora can return a shortlist, an exploratory hypothesis, or no deliverable at all rather than forcing an answer every time. |
+
+## Table of Contents
+
+1. [Overview](#overview)
+2. [Problem](#problem)
+3. [Solution](#solution)
+4. [Use Case](#use-case)
+5. [Execution Proof](#execution-proof)
+6. [Screenshots](#screenshots)
+7. [System Architecture](#system-architecture)
+8. [Payment Architecture](#payment-architecture)
+9. [Tech Stack](#tech-stack)
+10. [Evidence Model](#evidence-model)
+11. [Report Policy](#report-policy)
+12. [Judge Guide](#judge-guide)
+13. [Summary](#summary)
+
 ---
 
 ## Overview
@@ -106,6 +143,42 @@ The workflow then:
 | **Strong evidence + review approval** | A report is delivered and the job is completed. |
 | **Weak but still interesting signal** | A report may still be delivered, but clearly labeled as exploratory. |
 | **No defensible signal** | The job is rejected and the client escrow is refunded. |
+
+---
+
+## Execution Proof
+
+Veliora is intended as a real payment-aware workflow, not only a mocked research UI.
+
+| Proof point | Value |
+| --- | --- |
+| Outer job lifecycle | ERC-8183 on Arc handles create, fund, submit, complete, and reject transitions. |
+| Internal paid actions | x402 + Circle Gateway support low-value paid research actions inside the run. |
+| Nanopayment configuration | The default paid action price is `0.002 USDC`. |
+| Selective outcomes | The pipeline can deliver, downgrade to exploratory output, or reject and refund. |
+| Demo data | Sanitized examples are available in [examples/README.md](/Users/dilekakbas/Desktop/biomed-research/examples/README.md:1). |
+
+For submission and live walkthrough support:
+
+- [docs/JUDGE-GUIDE.md](/Users/dilekakbas/Desktop/biomed-research/docs/JUDGE-GUIDE.md:1)
+- [docs/DEMO-WALKTHROUGH.md](/Users/dilekakbas/Desktop/biomed-research/docs/DEMO-WALKTHROUGH.md:1)
+- [docs/ARCHITECTURE.md](/Users/dilekakbas/Desktop/biomed-research/docs/ARCHITECTURE.md:1)
+
+---
+
+## Screenshots
+
+### Workspace Summary
+
+![Veliora report summary](apps/web/public/screenshots/summary.png)
+
+### Research Methodology
+
+![Veliora methodology view](apps/web/public/screenshots/methodology.png)
+
+### Candidate Discovery
+
+![Veliora discovery candidates](apps/web/public/screenshots/discovery-candidate.png)
 
 ---
 
@@ -299,21 +372,14 @@ If rejected, the escrow is refunded onchain.
 
 ---
 
-## Why Veliora Matters
+## Judge Guide
 
-Veliora demonstrates that biomedical research workflows can be:
+If you are reviewing this project for the Arc hackathon, start here:
 
-| Property |
-| --- |
-| modular, |
-| agent-driven, |
-| economically coordinated, |
-| payment-aware, |
-| and auditable end to end. |
-
-Instead of treating research as a single opaque service, Veliora breaks it into specialized paid actions while preserving delivery control, review quality, and settlement logic.
-
-This makes it a strong example of how agentic systems can support real-world, low-value, high-frequency knowledge work.
+1. Read [docs/JUDGE-GUIDE.md](/Users/dilekakbas/Desktop/biomed-research/docs/JUDGE-GUIDE.md:1) for the shortest product explanation.
+2. Use [docs/DEMO-WALKTHROUGH.md](/Users/dilekakbas/Desktop/biomed-research/docs/DEMO-WALKTHROUGH.md:1) to follow the intended live demo order.
+3. Open [docs/ARCHITECTURE.md](/Users/dilekakbas/Desktop/biomed-research/docs/ARCHITECTURE.md:1) for the payment and orchestration model.
+4. Review [examples/README.md](/Users/dilekakbas/Desktop/biomed-research/examples/README.md:1) for the sanitized demo data package.
 
 ---
 
