@@ -201,45 +201,90 @@ Finalizer
 
 ## Payment Architecture
 
-Veliora uses **two distinct payment layers**.
+Veliora uses three distinct payment paths across the research workflow.
 
-### 1) External service payments
-Handled through **x402 + Circle Gateway**
+### 1. ERC-8183 Job Escrow — Client Funds the Research Job
 
-The PI agent pays for external research actions such as:
+**When:** a user starts a new biomedical research run
+
+This is the outer payment contract of the system.
+
+The client:
+- creates a job,
+- approves USDC,
+- funds escrow on Arc,
+- and waits for the report to be either completed or rejected.
+
+How it works:
+1. the client creates the job on Arc,
+2. the PI side sets the budget,
+3. the client funds the escrow in USDC,
+4. the workflow runs,
+5. the finalizer either completes the job or rejects it,
+6. if rejected, the escrow is refunded.
+
+Why it matters:
+This gives Veliora a real marketplace-style lifecycle instead of a simple paywall.
+
+### 2. x402 + Circle Gateway — Paid Research Actions Inside the Workflow
+
+**When:** the PI agent needs to buy a low-value research action during execution
+
+This is the internal payment path for usage-based research work.
+
+Examples:
 - literature retrieval,
 - DrugDB screening,
 - pathway analysis,
 - red-team review,
-- evaluator review.
+- peer review.
 
-Flow:
-1. request paid resource,
-2. receive `402 Payment Required`,
-3. sign Circle Gateway authorization,
-4. replay request with payment payload,
-5. settle batched payments later on Arc.
+How it works:
+1. the PI agent requests a paid research resource,
+2. the seller returns `402 Payment Required`,
+3. the PI signs a Circle Gateway authorization,
+4. the request is replayed with payment proof,
+5. settlement is batched later on Arc.
 
-This makes low-value research actions economically feasible.
+Why it matters:
+This is what makes low-value, high-frequency research actions economically viable.
 
 **Configured default nanopayment:**  
 - `0.002 USDC` per paid action
 
-### 2) Internal budget distribution
-Handled after successful completion
+### 3. Internal Budget Distribution — Post-Completion Agent Payouts
 
-Once a report is approved and the job is completed onchain, budget can be distributed internally to downstream agents such as:
+**When:** a report is approved and the research job completes successfully
+
+This is the internal value-distribution path after delivery.
+
+Funds can be distributed to internal downstream roles such as:
 - repurposing,
 - evidence,
 - report.
 
-These payouts are computed using:
-- base cost,
-- contribution weight,
-- risk weight,
-- payout weight.
+How it works:
+1. the job completes successfully,
+2. the system calculates internal payout shares,
+3. budget is allocated based on contribution and risk weights,
+4. rejected jobs do not trigger these payouts.
 
-This is separate from the x402 seller payment layer.
+Why it matters:
+This separates client escrow, external paid services, and internal agent economics into clear layers.
+
+### Why This Structure Matters
+
+Veliora is not using one payment rail for everything.
+
+It uses:
+- **ERC-8183** for client-facing job escrow,
+- **x402 + Circle Gateway** for paid per-step research execution,
+- **internal payout logic** for downstream agent reward allocation.
+
+That separation is important because each payment path solves a different economic problem:
+- client trust,
+- paid workflow execution,
+- and internal value sharing.
 
 ---
 
@@ -327,6 +372,68 @@ Veliora demonstrates that biomedical research workflows can be:
 Instead of treating research as a single opaque service, Veliora breaks it into specialized paid actions while preserving delivery control, review quality, and settlement logic.
 
 This makes it a strong example of how agentic systems can support real-world, low-value, high-frequency knowledge work.
+
+## Hackathon Track Alignment
+
+Veliora aligns most directly with the following Arc hackathon tracks:
+
+### 🧮 Usage-Based Compute Billing
+
+Veliora prices research as a sequence of smaller paid actions rather than a single opaque software fee.
+
+How it aligns:
+- the PI agent triggers discrete research tasks such as literature retrieval, DrugDB screening, pathway analysis, red-team review, and evaluator review,
+- these actions can be paid individually through **x402 + Circle Gateway**,
+- this makes pricing proportional to actual workflow activity rather than a flat subscription model.
+
+Why it matters:
+Biomedical research is not one homogeneous compute event. It is a chain of specialized steps with different cost and value profiles. Veliora turns that into a usage-based economic model.
+
+### 🛒 Real-Time Micro-Commerce Flow
+
+Veliora creates a real-time buyer and seller flow inside the research pipeline.
+
+How it aligns:
+- the client funds a research job in **USDC**,
+- the PI agent then purchases specific research actions from internal or external service layers,
+- the workflow is reviewed,
+- and the final result is either delivered or rejected with refund behavior.
+
+Why it matters:
+This is not deferred accounting or end-of-month settlement. Economic activity is triggered by the workflow itself, step by step, as the research run progresses.
+
+### 🤖 Agent-to-Agent Payment Loop
+
+Veliora demonstrates machine-driven economic coordination between specialized roles.
+
+How it aligns:
+- the **PI agent** acts as the orchestrator and budget manager,
+- specialist agents and seller endpoints contribute literature, DrugDB, pathway, red-team, and review work,
+- value moves through the system as agents request, perform, and validate work in sequence.
+
+Why it matters:
+Veliora shows that agents are not just producing text. They are coordinating paid actions, consuming services, and participating in an economically meaningful workflow.
+
+### 🪙 Per-API Monetization Engine
+
+Veliora can also be understood as a biomedical per-request monetization model.
+
+How it aligns:
+- research steps can be exposed as paid API-style actions,
+- each call can be priced independently in USDC,
+- the x402 flow supports per-request charging for valuable research operations.
+
+Why it matters:
+This turns domain-specific biomedical services into monetizable, composable building blocks instead of a single monolithic product.
+
+### Strongest Track Fit
+
+1. **Usage-Based Compute Billing**
+2. **Real-Time Micro-Commerce Flow**
+
+Secondary alignment:
+- **Agent-to-Agent Payment Loop**
+- **Per-API Monetization Engine**
 
 ---
 
