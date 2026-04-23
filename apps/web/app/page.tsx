@@ -328,14 +328,14 @@ export default function Home() {
               {/* Red team */}
               <div className="flex justify-center w-full mb-2">
                 <AgentNode name="Dr. Vale" role="Red Team" subtitle="Critical Review" color="amber" wide
-                  detail="Stress-tests the shortlist with the strongest counter-arguments: confounders in the evidence, mechanism-to-clinic failure modes, and reasons each candidate may not translate." />
+                  detail="Challenges reportable candidates with independent counter-arguments when a scored shortlist emerges, focusing on confounders, translational risk, and reasons a lead may not hold up." />
               </div>
               <VerticalConnector />
 
               {/* Report */}
               <div className="flex justify-center w-full mb-6">
                 <AgentNode name="Dr. Aria" role="Report" subtitle="Final Research Brief" color="sky" wide
-                  detail="Generates the structured research brief with top candidates, evidence table, provenance (PMIDs, ChEMBL IDs, NCT IDs), red-team caveats, and mandatory disclaimer." />
+                  detail="Generates the structured research brief with reportable candidates, early-stage hypotheses, or pipeline-reviewed signals, plus scoring context, provenance, and the required research disclaimer." />
               </div>
 
               {/* Peer review */}
