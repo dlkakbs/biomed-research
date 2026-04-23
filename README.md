@@ -275,6 +275,14 @@ Flow:
 
 ---
 
+## Transaction Evidence
+
+The funded workflow is documented and supported by a batch-level transaction summary covering escrow funding, seller settlement evidence, run-level execution, and the micropayment ledger.
+
+Full transaction summary: [artifacts/hackathon-batch/transaction-summary.md](./artifacts/hackathon-batch/transaction-summary.md)
+
+---
+
 ## Tech Stack
 
 ### Web Application
