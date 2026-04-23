@@ -281,6 +281,13 @@ The funded workflow is documented and supported by a batch-level transaction sum
 
 Full transaction summary: [artifacts/hackathon-batch/transaction-summary.md](./artifacts/hackathon-batch/transaction-summary.md)
 
+ArcScan references for ERC-8183 role activity:
+- Provider / PI wallet (`0x871bf9e2a99de1bd47a2a0c4d1056349eb4ab8a8`) — `setBudget` and `submit`transactions
+ https://testnet.arcscan.app/address/0x871bF9E2A99DE1bD47a2a0c4D1056349eB4AB8a8?tab=txs
+
+- Evaluator wallet (`0x99f89acf1a0db9665452a8fa5b50c43757e320a1`) — `complete` transactions
+https://testnet.arcscan.app/address/0x99f89acf1a0dB9665452A8fA5b50c43757E320A1?tab=txs
+
 ---
 
 ## Tech Stack
