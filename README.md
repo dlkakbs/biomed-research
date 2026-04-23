@@ -193,17 +193,20 @@ sequenceDiagram
 
 ### Agent Roles
 
-| Agent | Responsibility |
-|------|----------------|
-| **PI Agent** | Orchestrates workflow and manages budget |
-| Literature | Evidence retrieval |
-| DrugDB | Drug and target screening |
-| Pathway | Disease biology anchoring |
-| Repurposing | Hypothesis generation |
-| Evidence | Evidence scoring |
-| Red Team | Adversarial challenge layer for reportable candidates |
-| Report | Final synthesis |
-| Reviewers | Approval / rejection |
+| Agent       | Responsibility                                                                     |
+| ----------- | ---------------------------------------------------------------------------------- |
+| PI Agent    | Orchestrates the workflow, manages the escrow state, and dispatches research steps |
+| Literature  | Retrieves and filters disease-relevant papers from the literature layer            |
+| DrugDB      | Screens molecules, targets, and activity-linked candidate context                  |
+| Pathway     | Anchors disease biology through pathway, genetic, and clinical trial context       |
+| Repurposing | Generates candidate hypotheses from upstream evidence                              |
+| Evidence    | Scores and prioritizes the strongest candidate signals                             |
+| Red Team    | Challenges shortlisted candidates once a scored list is available                  |
+| Report      | Synthesizes findings into a structured research brief                              |
+| Reviewer I  | Verifies methodology, provenance, and report completeness                          |
+| Reviewer II | Checks consistency across candidate, evidence, and scoring fields                  |
+| Tiebreaker  | Resolves disagreements when reviewers reach different conclusions                  |
+
 
 ### Data Sources by Agent
 
@@ -215,18 +218,6 @@ sequenceDiagram
 
 - **Pathway**  
   Uses **Open Targets** plus linked pathway, genetic, and active clinical-trial context.
-
-- **Repurposing**  
-  Generates hypotheses over the combined literature, drug, and pathway outputs.
-
-- **Evidence**  
-  Scores and prioritizes aggregated candidate evidence from the upstream stages.
-
-- **Red Team**  
-  Acts as an independent challenge layer for reportable candidates when a scored shortlist exists.
-
-- **Report**  
-  Synthesizes upstream outputs into a structured research brief with provenance and delivery framing.
 
 ---
 
