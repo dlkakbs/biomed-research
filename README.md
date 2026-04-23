@@ -27,8 +27,8 @@ Built for the Agentic Economy on Arc Hackathon
 ## Links
 
 - Live app: https://veliora.vercel.app/
-- Demo video: [Watch on YouTube](https://youtu.be/yENv4v6XU7U)
-- Slides PDF: [veliora.pdf](docs/assets/veliora.pdf)
+- Video: [Watch on YouTube](https://youtu.be/yENv4v6XU7U)
+- Slides: [veliora.pdf](docs/assets/veliora.pdf)
 
 ---
 
@@ -36,9 +36,9 @@ Built for the Agentic Economy on Arc Hackathon
 
 Veliora is a multi-agent biomedical research system that turns a disease-focused query into a structured repurposing analysis workflow.
 
-A user funds a research job in **USDC**, and the system coordinates specialist agents across literature mining, drug database screening, pathway analysis, hypothesis generation, evidence scoring, red-team review, and final report synthesis.
+A user funds a research job in **USDC**, and the PI agent coordinates specialist agents across literature mining, drug database screening, pathway analysis, hypothesis generation, evidence scoring, report synthesis, and review. 
 
-The result is a **research brief**, not a medical advice.
+The result is a comprehensive **research brief**.
 
 Veliora is intentionally selective:
 - it may return a strong shortlist,
