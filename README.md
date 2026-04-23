@@ -14,7 +14,7 @@ Categories:
 ## Live Links
 
 - Live app: `TODO`
-- Demo video: [Velioravideo.mp4](docs/assets/Velioravideo.mp4)
+- Demo video: [Watch on YouTube](https://youtu.be/yENv4v6XU7U)
 - Slides PDF: [veliora.pdf](docs/assets/veliora.pdf)
 
 ---
