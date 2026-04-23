@@ -71,12 +71,13 @@ Veliora solves this by combining an **agentic research workflow** with a **two-l
 - **x402 + Circle Gateway** handle low-value paid research actions inside the workflow.
 - **Arc** provides fast finality and a USDC-native coordination layer.
 
-This lets Veliora support:
-- escrowed research jobs,
-- paid per-step external services,
-- traceable evidence collection,
-- peer review before delivery,
-- and refund-on-rejection behavior.
+This directly addresses the coordination problems in biomedical research workflows:
+
+- instead of bundling literature retrieval, DrugDB screening, pathway analysis, and review into one opaque service, Veliora breaks them into distinct workflow steps,
+- instead of forcing research into a subscription-style software model, Veliora supports **per-task** and **per-step** payment flows tied to the actual work performed,
+- instead of losing visibility across a fragmented pipeline, it keeps evidence collection and stage progression traceable,
+- instead of delivering unreviewed output, it inserts peer review before final delivery,
+- and instead of charging for weak or non-defensible results, it supports rejection and onchain refund behavior.
 
 In short, Veliora makes multi-step biomedical research economically practical.
 
@@ -153,11 +154,11 @@ PI Agent / Orchestrator (Dr. Iris)
   +--> Literature Agent / Seller
   +--> DrugDB Agent / Seller
   +--> Pathway Agent / Seller
-  +--> Red-Team Agent / Seller
-  +--> Review Agent / Seller
   +--> Internal Repurposing
   +--> Internal Evidence Scoring
+  +--> Red Team Agent-Critics / Seller
   +--> Internal Report Synthesis
+  +--> Peer Review Service / Seller
   |
   | 5. submit(reportDigest)
   v
@@ -170,32 +171,17 @@ Finalizer
 
 ### Agent roles
 
-- **Dr. Iris · PI Agent**  
-  Orchestrates the workflow, manages paid service calls, tracks progress, and handles submission or rejection.
-
-- **Dr. Mira · Literature**  
-  Mines and prioritizes literature evidence.
-
-- **Dr. Rex · DrugDB**  
-  Screens drug, target, and candidate-molecule context.
-
-- **Dr. Nova · Pathway**  
-  Anchors the analysis in disease biology.
-
-- **Dr. Spark · Repurposing**  
-  Generates and filters candidate hypotheses.
-
-- **Dr. Vera · Evidence**  
-  Scores evidence across literature, biology, clinical signal, safety, and genetics.
-
-- **Dr. Vale · Red Team**  
-  Performs adversarial review and surfaces weaknesses.
-
-- **Dr. Aria · Report**  
-  Produces the final research brief.
-
-- **Review I / Review II / Tiebreak**  
-  Final peer-review layer that determines approval or rejection.
+| Agent | Responsibility |
+| --- | --- |
+| **Dr. Iris · PI Agent** | Orchestrates the workflow, manages paid service calls, tracks progress, and handles submission or rejection. |
+| **Dr. Mira · Literature** | Mines and prioritizes literature evidence. |
+| **Dr. Rex · DrugDB** | Screens drug, target, and candidate-molecule context. |
+| **Dr. Nova · Pathway** | Anchors the analysis in disease biology. |
+| **Dr. Spark · Repurposing** | Generates and filters candidate hypotheses. |
+| **Dr. Vera · Evidence** | Scores evidence across literature, biology, clinical signal, safety, and genetics. |
+| **Dr. Vale · Red Team** | Performs adversarial review and surfaces weaknesses. |
+| **Dr. Aria · Report** | Produces the final research brief. |
+| **Review I / Review II / Tiebreak** | Final peer-review layer that determines approval or rejection. |
 
 ---
 
