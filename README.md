@@ -133,40 +133,48 @@ The workflow then:
 
 Veliora is built as a payment-aware multi-agent research pipeline.
 
-### High-level flow
+The architecture has three connected layers:
 
-```text
-Client Wallet
-  |
-  | 1. createJob
-  v
-ERC-8183 Job on Arc
-  |
-  | 2. setBudget
-  | 3. approve USDC
-  | 4. fund
-  v
-Escrowed Research Job
-  |
-  v
-PI Agent / Orchestrator (Dr. Iris)
-  |
-  +--> Literature Agent / Seller
-  +--> DrugDB Agent / Seller
-  +--> Pathway Agent / Seller
-  +--> Internal Repurposing
-  +--> Internal Evidence Scoring
-  +--> Red Team Agent-Critics / Seller
-  +--> Internal Report Synthesis
-  +--> Peer Review Service / Seller
-  |
-  | 5. submit(reportDigest)
-  v
-Finalizer
-  |
-  +--> complete -> escrow released -> internal payouts
-  |
-  +--> reject   -> escrow refunded
+- **Client job layer**  
+  The client creates a job, approves USDC, and funds escrow through ERC-8183 on Arc.
+
+- **Research execution layer**  
+  The PI agent orchestrates literature, DrugDB, pathway, repurposing, evidence, red-team critique, report synthesis, and peer review.
+
+- **Resolution layer**  
+  The finalizer either completes the job and releases escrow or rejects the job and refunds it.
+
+### Sequence Diagram
+
+```mermaid
+sequenceDiagram
+    participant U as Client Wallet
+    participant J as ERC-8183 Job on Arc
+    participant P as PI Agent
+    participant S as Paid Research Services
+    participant R as Peer Review
+    participant F as Finalizer
+
+    U->>J: createJob
+    P->>J: setBudget
+    U->>J: approve + fund in USDC
+
+    J->>P: job funded
+    P->>S: request research action
+    S-->>P: 402 Payment Required
+    P->>S: replay with payment proof
+
+    P->>P: repurposing + evidence scoring
+    P->>R: submit report for peer review
+    R-->>F: approve or reject
+
+    alt approved
+        F->>J: complete
+        J-->>U: escrow released
+    else rejected
+        F->>J: reject
+        J-->>U: escrow refunded
+    end
 ```
 
 ### Agent roles
