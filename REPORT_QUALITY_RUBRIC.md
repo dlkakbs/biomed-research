@@ -21,6 +21,63 @@ Total score bands:
 - `13-16` = good
 - `17-21` = very good
 
+## Product Scoring Model
+
+The product-level ranking model is a `100-point` system. It weights:
+
+- literature support: `0-30`
+- mechanism overlap: `0-30`
+- clinical evidence: `0-20`
+- safety profile: `0-10`
+- genetic support: `-10` to `+10`
+
+These weights are what drive the candidate ranking and shortlist behavior inside the product.
+
+The report UI then compresses that underlying score into three high-level evaluation dimensions:
+
+- `Evidence`
+  reflects how strong the disease-specific and candidate-linked support is
+- `Maturity`
+  reflects how clinically established or translationally advanced the candidate is
+- `Risk`
+  reflects uncertainty, development difficulty, and safety / execution concerns
+
+Interpretation:
+
+- low `Evidence` usually means the support is indirect, early-stage, sparse, or inconsistent
+- high `Maturity` usually means the drug is already clinically studied or approved in another setting
+- low `Risk` usually means safety and operational feasibility are better understood
+
+These dimensions should be treated as a presentation layer over the fuller scoring model, not as a replacement for it.
+
+## Output Labels and Badges
+
+The product also surfaces compact interpretation labels on top of the scoring model. These are not independent scoring categories; they are UI-facing summaries of how the run should be read.
+
+Common examples include:
+
+- `repurposing fit`
+- `low confidence`
+- `disease-context evidence only`
+- `mechanistic with genetic context`
+- `high failure risk`
+- `new idea`
+
+How to read them:
+
+- `repurposing fit` usually signals that the mechanism and disease context align well enough to merit attention
+- `low confidence` means the system is signaling uncertainty rather than a strong translational claim
+- `disease-context evidence only` means the run found disease-relevant evidence, but not strong candidate-specific validation
+- `mechanistic with genetic context` means the signal is supported mainly by mechanism and disease-biology anchoring
+- `high failure risk` means the path to translation is fragile, weakly validated, or operationally risky
+- `new idea` should be read as novelty framing, not proof of strength
+
+Rubric rule:
+
+- these labels should reinforce the report's honesty
+- they must not make an exploratory output look shortlist-level
+- they must not be interpreted as substitutes for candidate-specific evidence
+
 ## Categories
 
 ### 1. Literature Precision
