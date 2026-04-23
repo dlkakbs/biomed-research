@@ -23,7 +23,7 @@ Veliora breaks research work into smaller paid actions:
 - DrugDB screening,
 - pathway analysis,
 - red-team review,
-- evaluator review.
+- peer review.
 
 These are charged per action rather than hidden inside a single flat backend fee.
 
