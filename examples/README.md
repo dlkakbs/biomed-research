@@ -4,11 +4,13 @@ This directory contains sanitized demo data for local evaluation and jury walkth
 
 ## Included Files
 
-- `sample-task.json`
-  Demo task metadata that becomes the seeded job record.
-- `sample-events.json`
+The sample files live directly in this folder:
+
+- [sample-task.json](sample-task.json)
+  Demo task metadata used for the seeded job record.
+- [sample-events.json](sample-events.json)
   Demo pipeline events shown on the workspace timeline.
-- `sample-report.json`
+- [sample-report.json](sample-report.json)
   Demo report payload shown on the results page.
 
 ## Safety
