@@ -39,6 +39,70 @@ If the output does not pass review, the job is rejected and the escrow is refund
 - Selective output policy instead of forced answers
 - Traceable research stages from intake to report resolution
 
+This makes it a strong example of how agentic systems can support real-world, low-value, high-frequency knowledge work.
+
+## Hackathon Track Alignment
+
+Veliora aligns most directly with the following Arc hackathon tracks:
+
+### 🧮 Usage-Based Compute Billing
+
+Veliora prices research as a sequence of smaller paid actions.
+
+How it aligns:
+- the PI agent triggers discrete research tasks such as literature retrieval, DrugDB screening, pathway analysis, red-team review, and evaluator review,
+- these actions can be paid individually through **x402 + Circle Gateway**,
+- this makes pricing proportional to actual workflow activity rather than a flat subscription model.
+
+Why it matters:
+Biomedical research is a chain of specialized steps with different cost and value profiles. Veliora turns that into a usage-based economic model.
+
+### 🛒 Real-Time Micro-Commerce Flow
+
+Veliora creates a real-time buyer and seller flow inside the research pipeline.
+
+How it aligns:
+- the client funds a research job in **USDC**,
+- the PI agent then purchases specific research actions from internal or external service layers,
+- the workflow is reviewed,
+- and the final result is either delivered or rejected with refund behavior.
+
+Why it matters:
+Economic activity is triggered by the workflow itself, step by step, as the research run progresses.
+
+### 🤖 Agent-to-Agent Payment Loop
+
+Veliora demonstrates machine-driven economic coordination between specialized roles.
+
+How it aligns:
+- the **PI agent** acts as the orchestrator and budget manager,
+- specialist agents and seller endpoints contribute literature, DrugDB, pathway, red-team, and review work,
+- value moves through the system as agents request, perform, and validate work in sequence.
+
+Why it matters:
+Veliora shows that agents are coordinating paid actions, consuming services, and participating in an economically meaningful workflow.
+
+### 🪙 Per-API Monetization Engine
+
+Veliora can also be understood as a biomedical per-request monetization model.
+
+How it aligns:
+- research steps can be exposed as paid API-style actions,
+- each call can be priced independently in USDC,
+- the x402 flow supports per-request charging for valuable research operations.
+
+Why it matters:
+This turns domain-specific biomedical services into monetizable, composable building blocks instead of a single monolithic product.
+
+### Strongest Track Fit
+
+1. **Usage-Based Compute Billing**
+2. **Real-Time Micro-Commerce Flow**
+
+Secondary alignment:
+- **Agent-to-Agent Payment Loop**
+- **Per-API Monetization Engine**
+
 ---
 
 ## Problem
@@ -57,8 +121,6 @@ Paying for each small research action individually is usually:
 - operationally heavy,
 - too expensive for low-value actions,
 - and difficult to audit across a multi-stage workflow.
-
-As a result, it is hard to build a research pipeline where many agents or services can be paid fairly and efficiently per action.
 
 ---
 
@@ -112,22 +174,6 @@ The workflow then:
 
 - **No defensible signal**  
   The job is rejected and the client escrow is refunded.
-
----
-
-## Screenshots
-
-### Report Summary
-
-![Veliora summary](apps/web/public/screenshots/summary.png)
-
-### Methodology
-
-![Veliora methodology](apps/web/public/screenshots/methodology.png)
-
-### Discovery Candidates
-
-![Veliora discovery candidates](apps/web/public/screenshots/discovery-candidate.png)
 
 ---
 
@@ -205,12 +251,6 @@ Veliora uses three distinct payment paths across the research workflow.
 
 This is the outer payment contract of the system.
 
-The client:
-- creates a job,
-- approves USDC,
-- funds escrow on Arc,
-- and waits for the report to be either completed or rejected.
-
 How it works:
 1. the client creates the job on Arc,
 2. the PI side sets the budget,
@@ -220,13 +260,13 @@ How it works:
 6. if rejected, the escrow is refunded.
 
 Why it matters:
-This gives Veliora a real marketplace-style lifecycle instead of a simple paywall.
+This gives Veliora a real escrowed job lifecycle.
 
 ### 2. x402 + Circle Gateway — Paid Research Actions Inside the Workflow
 
-**When:** the PI agent needs to buy a low-value research action during execution
+**When:** the PI agent needs to buy a low-value research action during execution.
 
-This is the internal payment path for usage-based research work.
+This is the payment path for usage-based research work.
 
 Examples:
 - literature retrieval,
@@ -240,7 +280,9 @@ How it works:
 2. the seller returns `402 Payment Required`,
 3. the PI signs a Circle Gateway authorization,
 4. the request is replayed with payment proof,
-5. settlement is batched later on Arc.
+5. the seller submits the payment to Circle Gateway,
+6. Gateway processes the payment for settlement,
+7. Gateway later settles payments in batches on Arc.
 
 Why it matters:
 This is what makes low-value, high-frequency research actions economically viable.
@@ -254,14 +296,9 @@ This is what makes low-value, high-frequency research actions economically viabl
 
 This is the internal value-distribution path after delivery.
 
-Funds can be distributed to internal downstream roles such as:
-- repurposing,
-- evidence,
-- report.
-
 How it works:
 1. the job completes successfully,
-2. the system calculates internal payout shares,
+2. the system calculates internal payout shares for repurposing, evidence, and report agents,
 3. budget is allocated based on contribution and risk weights,
 4. rejected jobs do not trigger these payouts.
 
@@ -355,89 +392,8 @@ If rejected, the escrow is refunded onchain.
 
 ---
 
-## Why Veliora Matters
-
-Veliora demonstrates that biomedical research workflows can be:
-
-- modular,
-- agent-driven,
-- economically coordinated,
-- payment-aware,
-- and auditable end to end.
-
-Instead of treating research as a single opaque service, Veliora breaks it into specialized paid actions while preserving delivery control, review quality, and settlement logic.
-
-This makes it a strong example of how agentic systems can support real-world, low-value, high-frequency knowledge work.
-
-## Hackathon Track Alignment
-
-Veliora aligns most directly with the following Arc hackathon tracks:
-
-### 🧮 Usage-Based Compute Billing
-
-Veliora prices research as a sequence of smaller paid actions rather than a single opaque software fee.
-
-How it aligns:
-- the PI agent triggers discrete research tasks such as literature retrieval, DrugDB screening, pathway analysis, red-team review, and evaluator review,
-- these actions can be paid individually through **x402 + Circle Gateway**,
-- this makes pricing proportional to actual workflow activity rather than a flat subscription model.
-
-Why it matters:
-Biomedical research is not one homogeneous compute event. It is a chain of specialized steps with different cost and value profiles. Veliora turns that into a usage-based economic model.
-
-### 🛒 Real-Time Micro-Commerce Flow
-
-Veliora creates a real-time buyer and seller flow inside the research pipeline.
-
-How it aligns:
-- the client funds a research job in **USDC**,
-- the PI agent then purchases specific research actions from internal or external service layers,
-- the workflow is reviewed,
-- and the final result is either delivered or rejected with refund behavior.
-
-Why it matters:
-This is not deferred accounting or end-of-month settlement. Economic activity is triggered by the workflow itself, step by step, as the research run progresses.
-
-### 🤖 Agent-to-Agent Payment Loop
-
-Veliora demonstrates machine-driven economic coordination between specialized roles.
-
-How it aligns:
-- the **PI agent** acts as the orchestrator and budget manager,
-- specialist agents and seller endpoints contribute literature, DrugDB, pathway, red-team, and review work,
-- value moves through the system as agents request, perform, and validate work in sequence.
-
-Why it matters:
-Veliora shows that agents are not just producing text. They are coordinating paid actions, consuming services, and participating in an economically meaningful workflow.
-
-### 🪙 Per-API Monetization Engine
-
-Veliora can also be understood as a biomedical per-request monetization model.
-
-How it aligns:
-- research steps can be exposed as paid API-style actions,
-- each call can be priced independently in USDC,
-- the x402 flow supports per-request charging for valuable research operations.
-
-Why it matters:
-This turns domain-specific biomedical services into monetizable, composable building blocks instead of a single monolithic product.
-
-### Strongest Track Fit
-
-1. **Usage-Based Compute Billing**
-2. **Real-Time Micro-Commerce Flow**
-
-Secondary alignment:
-- **Agent-to-Agent Payment Loop**
-- **Per-API Monetization Engine**
-
----
-
 ## Additional Docs
 
-- [JUDGE-GUIDE.md](docs/JUDGE-GUIDE.md)
-- [DEMO-WALKTHROUGH.md](docs/DEMO-WALKTHROUGH.md)
-- [ARCHITECTURE.md](docs/ARCHITECTURE.md)
 - [examples/README.md](examples/README.md)
 
 ---
