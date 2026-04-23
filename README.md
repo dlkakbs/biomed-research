@@ -11,9 +11,9 @@ Categories:
 
 ---
 
-## Live Links
+## Links
 
-- Live app: `TODO`
+- Live app: https://veliora.vercel.app/
 - Demo video: [Watch on YouTube](https://youtu.be/yENv4v6XU7U)
 - Slides PDF: [veliora.pdf](docs/assets/veliora.pdf)
 
@@ -94,9 +94,16 @@ Veliora turns fragmented research steps into a coordinated, economically viable 
 
 ## Use Case
 
-A user submits a disease-focused query:
+A user submits a disease-focused request, such as:
 
-> “What repurposable compounds may be relevant based on literature, pathway context, and known targets?”
+- Idiopathic pulmonary fibrosis
+- Type 2 Diabetes
+- Multiple sclerosis
+- Alzheimer’s disease
+- Parkinson’s disease
+- Triple-negative breast cancer
+
+> “What repurposable compounds may be relevant for this condition based on literature, pathway context, and known targets?”
 
 The system:
 
