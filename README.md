@@ -122,11 +122,11 @@ PI Agent / Orchestrator (Dr. Iris)
   +--> Literature Agent / Seller
   +--> DrugDB Agent / Seller
   +--> Pathway Agent / Seller
+  +--> Internal Repurposing 
+  +--> Internal Evidence Scoring 
   +--> Red-Team Agent / Seller
-  +--> Review Agent / Seller
-  +--> Internal Repurposing
-  +--> Internal Evidence Scoring
   +--> Internal Report Synthesis
+  +--> Review Agent / Seller
   |
   | 5. submit(reportDigest)
   v
