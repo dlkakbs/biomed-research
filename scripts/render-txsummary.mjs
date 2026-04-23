@@ -151,26 +151,6 @@ function getMicropaymentRows() {
   return rows;
 }
 
-function getLifecycleRows() {
-  const query = db.prepare(`
-    SELECT job_id, tx_type, tx_status, tx_hash, wallet_address, amount_units
-    FROM job_funding_transactions
-    WHERE job_id = ?
-    ORDER BY
-      CASE tx_type
-        WHEN 'create' THEN 1
-        WHEN 'setbudget' THEN 2
-        WHEN 'approve' THEN 3
-        WHEN 'fund' THEN 4
-        WHEN 'submit' THEN 5
-        WHEN 'complete' THEN 6
-        WHEN 'reject' THEN 7
-        ELSE 99
-      END ASC
-  `);
-  return manifest.runs.flatMap((run) => query.all(run.jobId));
-}
-
 function getRunSummaryRows() {
   return manifest.runs.map((run, index) => ({
     ...run,
@@ -189,7 +169,6 @@ async function main() {
   const clientRows = await getClientFundingRows();
   const sellerBalances = await getSellerBalanceRows();
   const micropayments = getMicropaymentRows();
-  const lifecycleRows = getLifecycleRows();
   const runSummaryRows = getRunSummaryRows();
   const totalPaid = (micropayments.length * 0.002).toFixed(3);
 
@@ -358,30 +337,6 @@ async function main() {
           { key: "verify", className: "col-verify" },
           { key: "settle", className: "col-settle" },
           { key: "transaction", className: "mono" }
-        ])}
-      </tbody>
-    </table>
-
-    <h2 class="section-red">Lifecycle Transactions</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>job_id</th>
-          <th>tx_type</th>
-          <th>tx_status</th>
-          <th>tx_hash</th>
-          <th>wallet_address</th>
-          <th>amount_units</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${tableRows(lifecycleRows, [
-          { key: "job_id" },
-          { key: "tx_type" },
-          { key: "tx_status" },
-          { key: "tx_hash", className: "mono" },
-          { key: "wallet_address", className: "mono" },
-          { key: "amount_units" }
         ])}
       </tbody>
     </table>
