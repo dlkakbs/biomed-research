@@ -156,13 +156,13 @@ Veliora is intended as a real payment-aware workflow, not only a mocked research
 | Internal paid actions | x402 + Circle Gateway support low-value paid research actions inside the run. |
 | Nanopayment configuration | The default paid action price is `0.002 USDC`. |
 | Selective outcomes | The pipeline can deliver, downgrade to exploratory output, or reject and refund. |
-| Demo data | Sanitized examples are available in [examples/README.md](/Users/dilekakbas/Desktop/biomed-research/examples/README.md:1). |
+| Demo data | Sanitized examples are available in [examples/README.md](examples/README.md). |
 
 For submission and live walkthrough support:
 
-- [docs/JUDGE-GUIDE.md](/Users/dilekakbas/Desktop/biomed-research/docs/JUDGE-GUIDE.md:1)
-- [docs/DEMO-WALKTHROUGH.md](/Users/dilekakbas/Desktop/biomed-research/docs/DEMO-WALKTHROUGH.md:1)
-- [docs/ARCHITECTURE.md](/Users/dilekakbas/Desktop/biomed-research/docs/ARCHITECTURE.md:1)
+- [docs/JUDGE-GUIDE.md](docs/JUDGE-GUIDE.md)
+- [docs/DEMO-WALKTHROUGH.md](docs/DEMO-WALKTHROUGH.md)
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
 
 ---
 
@@ -354,7 +354,7 @@ Genetic evidence is used as disease-biology context, not as causal proof or medi
 
 Outputs are **research prioritization artifacts**, not medical advice.
 
-The full evaluation criteria and scoring thresholds are defined in [REPORT_QUALITY_RUBRIC.md](/Users/dilekakbas/Desktop/biomed-research/REPORT_QUALITY_RUBRIC.md:1).
+The full evaluation criteria and scoring thresholds are defined in [REPORT_QUALITY_RUBRIC.md](REPORT_QUALITY_RUBRIC.md).
 
 ---
 
@@ -376,10 +376,10 @@ If rejected, the escrow is refunded onchain.
 
 If you are reviewing this project for the Arc hackathon, start here:
 
-1. Read [docs/JUDGE-GUIDE.md](/Users/dilekakbas/Desktop/biomed-research/docs/JUDGE-GUIDE.md:1) for the shortest product explanation.
-2. Use [docs/DEMO-WALKTHROUGH.md](/Users/dilekakbas/Desktop/biomed-research/docs/DEMO-WALKTHROUGH.md:1) to follow the intended live demo order.
-3. Open [docs/ARCHITECTURE.md](/Users/dilekakbas/Desktop/biomed-research/docs/ARCHITECTURE.md:1) for the payment and orchestration model.
-4. Review [examples/README.md](/Users/dilekakbas/Desktop/biomed-research/examples/README.md:1) for the sanitized demo data package.
+1. Read [docs/JUDGE-GUIDE.md](docs/JUDGE-GUIDE.md) for the shortest product explanation.
+2. Use [docs/DEMO-WALKTHROUGH.md](docs/DEMO-WALKTHROUGH.md) to follow the intended live demo order.
+3. Open [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the payment and orchestration model.
+4. Review [examples/README.md](examples/README.md) for the sanitized demo data package.
 
 ---
 
