@@ -96,17 +96,17 @@ const workflowSteps = [
   {
     eyebrow: 'Step 1',
     title: 'Submit a research request',
-    body: 'Choose the disease area, describe the research question, and set the budget for the job.',
+    body: 'Choose the disease area, describe the research question, and fund the research job to start the workflow.',
   },
   {
     eyebrow: 'Step 2',
     title: 'Specialized agents gather evidence',
-    body: 'Specialized agents review the literature, screen candidate molecules, map disease biology, and add independent evaluation before the report is finalized.',
+    body: 'Specialized agents review the literature, screen candidate molecules, map disease biology, score the strongest leads, and challenge reportable candidates before delivery.',
   },
   {
     eyebrow: 'Step 3',
-    title: 'Receive a scored research brief',
-    body: 'Receive ranked candidates with clear scoring, key cautions, failure modes, next-step tests, and a traceable research trail.',
+    title: 'Receive a structured research brief',
+    body: 'Receive reportable candidates, early-stage hypotheses, or pipeline-reviewed signals with scoring context, key cautions, next-step checks, and a traceable research trail.',
   },
 ];
 

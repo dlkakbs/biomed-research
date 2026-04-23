@@ -30,7 +30,15 @@ The result is a **research brief**, not a treatment recommendation.
 Veliora is intentionally selective:
 - it may return a strong shortlist,
 - a weaker exploratory hypothesis,
+- pipeline-reviewed signals that did not advance into a scored shortlist,
 - or no deliverable at all.
+
+Two output types should be read differently:
+
+- **Pipeline-reviewed signals**  
+  Early mechanism-linked leads examined by the core workflow across literature, drug, pathway, and evidence scoring. These are exploratory and are not the same as a final shortlist.
+- **Red-team challenged candidates**  
+  Stronger reportable candidates that advanced far enough to be stress-tested by the red-team layer before delivery.
 
 ---
 
@@ -104,6 +112,7 @@ The system:
 
 - **Strong signal** → report delivered  
 - **Weak signal** → exploratory report  
+- **No scored shortlist, but usable early leads** → pipeline-reviewed signals surfaced as exploratory context  
 - **No defensible result** → rejected + refunded  
 
 ---
@@ -185,7 +194,7 @@ sequenceDiagram
 | Pathway | Disease biology anchoring |
 | Repurposing | Hypothesis generation |
 | Evidence | Evidence scoring |
-| Red Team | Adversarial review |
+| Red Team | Adversarial challenge layer for reportable candidates |
 | Report | Final synthesis |
 | Reviewers | Approval / rejection |
 
