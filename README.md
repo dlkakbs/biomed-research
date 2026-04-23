@@ -23,9 +23,9 @@ A user funds a research job in **USDC**, and the system coordinates multiple spe
 
 The result is a **research brief**, not a treatment recommendation.
 
-Veliora is designed to be selective:
-- it may return a strong shortlist,
-- a weaker exploratory hypothesis,
+Veliora is designed to be selective. It returns:
+- a strong shortlist,
+- or a weaker exploratory hypothesis,
 - or no deliverable at all.
 
 If the output does not pass review, the job is rejected and the escrow is refunded onchain.
