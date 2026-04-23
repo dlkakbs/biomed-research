@@ -16,12 +16,13 @@ async function main() {
   const db = connectDatabase();
   const payments = createPaymentSystem();
   const orchestrator = createOrchestrator({ db, payments });
-  const port = Number(process.env.API_PORT ?? "3001");
+  const port = Number(process.env.PORT ?? process.env.API_PORT ?? "3001");
   const server = createHttpServer(db);
 
   console.log("[api] BioMed Research API ready");
   console.log(`[api] payment mode: ${payments.mode}`);
   console.log(`[api] orchestrator: ${orchestrator.name}`);
+  console.log(`[api] port source: ${process.env.PORT ? "PORT" : process.env.API_PORT ? "API_PORT" : "default"}`);
   server.listen(port, () => {
     console.log(`[api] listening on http://localhost:${port}`);
   });
