@@ -212,6 +212,20 @@ function readStoredLifecycleDebug(jobId: string, kind: 'create' | 'setbudget' | 
   }
 }
 
+function readLifecycleSignature(jobId: string): string {
+  const create = readStoredLifecycleDebug(jobId, 'create');
+  const setbudget = readStoredLifecycleDebug(jobId, 'setbudget');
+  const fund = readStoredLifecycleDebug(jobId, 'fund');
+  return JSON.stringify({
+    create: create?.txHash ?? null,
+    createAt: create?.createdAt ?? null,
+    setbudget: setbudget?.txHash ?? null,
+    setbudgetAt: setbudget?.createdAt ?? null,
+    fund: fund?.txHash ?? null,
+    fundAt: fund?.createdAt ?? null,
+  });
+}
+
 function buildSyntheticLifecycleEvents(jobId: string): AgentEvent[] {
   const synthetic = [
     {
@@ -877,9 +891,10 @@ export default function WorkspacePage() {
   const [funding, setFunding] = useState<FundingDebug | null>(null);
   const [fundStep, setFundStep] = useState<'idle' | 'approving' | 'funding' | 'starting' | 'done' | 'error'>('idle');
   const [fundError, setFundError] = useState<string | null>(null);
+  const [lifecycleSignature, setLifecycleSignature] = useState('');
   const feedRef = useRef<HTMLDivElement>(null);
   const evaluatorReason = extractEvaluatorReason(lastMessages['pi']);
-  const syntheticLifecycleEvents = useMemo(() => buildSyntheticLifecycleEvents(jobId), [jobId]);
+  const syntheticLifecycleEvents = useMemo(() => buildSyntheticLifecycleEvents(jobId), [jobId, lifecycleSignature]);
   const mergedEvents = useMemo(
     () => dedupeLifecycleEvents([...syntheticLifecycleEvents, ...events]).sort((left, right) => left.created_at.localeCompare(right.created_at)),
     [events, syntheticLifecycleEvents]
@@ -937,6 +952,7 @@ export default function WorkspacePage() {
           `biomed_job_lifecycle_${jobId}_fund`,
           JSON.stringify({ txHash: fundHash, createdAt: new Date().toISOString() })
         );
+        setLifecycleSignature(readLifecycleSignature(jobId));
       } catch {}
 
       // 3. start pipeline
@@ -1010,6 +1026,17 @@ export default function WorkspacePage() {
       .find((event) => /finalizer complete executed/i.test(event.message))
       ?.message
   );
+
+  useEffect(() => {
+    setLifecycleSignature(readLifecycleSignature(jobId));
+    const timer = setInterval(() => {
+      setLifecycleSignature((current) => {
+        const next = readLifecycleSignature(jobId);
+        return current === next ? current : next;
+      });
+    }, 1500);
+    return () => clearInterval(timer);
+  }, [jobId]);
 
   useEffect(() => {
     if (pipelineStarted && (fundStep === 'starting' || fundStep === 'done')) {
