@@ -1,6 +1,6 @@
 # Veliora
 
-Agentic biomedical research workflow for drug repurposing analysis, powered by programmable payment rails.
+Veliora is a multi-agent biomedical research system for drug repurposing that funds workflows in USDC, runs evidence-driven pipelines, and delivers structured, traceable research briefs.
 
 ![Veliora cover](docs/assets/veliora-cover-v5.png)
 
