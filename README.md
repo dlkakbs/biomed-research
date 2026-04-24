@@ -206,8 +206,8 @@ Paid actions cover literature, DrugDB, pathway, red-team critique, and peer revi
 | DrugDB      | Screens molecules, targets, and activity-linked candidate context                  |
 | Pathway     | Anchors disease biology through pathway, genetic, and clinical trial context       |
 | Repurposing | Generates candidate hypotheses from upstream evidence                              |
-| Evidence    | Scores and prioritizes the strongest candidate signals                             |
-| Red Team    | Challenges shortlist candidates for risk and confounders                  |
+| Evidence    | Scores and prioritizes shortlisted candidate signals                               |
+| Red Team    | Challenges shortlisted candidates for risk and confounders                         |
 | Report      | Synthesizes findings into a structured research brief                              |
 | Reviewer I  | Verifies methodology, provenance, and report completeness                          |
 | Reviewer II | Checks consistency across candidate, evidence, and scoring fields                  |
