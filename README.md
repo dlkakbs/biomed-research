@@ -113,7 +113,7 @@ The system:
 
 1. creates and funds a job in USDC
 2. dispatches specialist agents
-3. executes paid research/review steps
+3. executes paid research steps
 4. gathers and scores candidate evidence
 5. challenges reportable candidates when a scored shortlist is available
 6. assembles the final research brief and review outcome
