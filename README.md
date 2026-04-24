@@ -71,7 +71,7 @@ This makes it hard to build modular, auditable, and fairly priced research pipel
 Veliora combines an **agentic research workflow** with a **multi-layer payment system**:
 
 - **ERC-8183 on Arc** → job escrow, lifecycle, and resolution  
-- **x402 + Circle Gateway** → per-step paid research actions  
+- **x402 + Circle Gateway** → per-step paid research/review actions  
 - **Arc** → fast finality and a USDC-native settlement layer  
 
 This enables:
@@ -113,7 +113,7 @@ The system:
 
 1. creates and funds a job in USDC
 2. dispatches specialist agents
-3. executes paid research steps
+3. executes paid research/review steps
 4. gathers and scores candidate evidence
 5. challenges reportable candidates when a scored shortlist is available
 6. assembles the final research brief and review outcome
@@ -195,7 +195,7 @@ sequenceDiagram
     end
 ```
 
-Paid research actions cover literature, DrugDB, pathway, red-team critique, and peer review, while repurposing, evidence scoring, and report synthesis remain in the PI-led core orchestration layer.
+Paid actions cover literature, DrugDB, pathway, red-team critique, and peer review, while repurposing, evidence scoring, and report synthesis remain in the PI-led core orchestration layer.
 
 ### Agent Roles
 
@@ -303,9 +303,9 @@ https://testnet.arcscan.app/address/0x99f89acf1a0dB9665452A8fA5b50c43757E320A1?t
 - **Arc**  
   Fast finality and a USDC-native settlement layer  
 - **ERC-8183**  
-  Job escrow and resolution lifecycle  
-- **USDC**  
-  Funding and settlement currency  
+  Job escrow and resolution lifecycle
+- **USDC**
+  The currency
 
 ### Payment Infrastructure
 - **Circle Wallets**  
