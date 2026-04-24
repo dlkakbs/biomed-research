@@ -34,15 +34,15 @@ Built for the Agentic Economy on Arc Hackathon
 
 ## Overview
 
-Veliora is a multi-agent biomedical research system that turns a disease-focused query into a structured repurposing workflow.
+Veliora is a **multi-agent biomedical research** system that turns a disease-focused query into a structured repurposing workflow.
 
 A user funds a research job in **USDC**, and the PI agent coordinates specialist agents across literature mining, drug database screening, pathway analysis, hypothesis generation, evidence scoring, conditional critique, report synthesis, and review.
 
-The result is a structured **research brief** that may surface reportable candidates, exploratory hypotheses, or pipeline-reviewed signals, depending on the strength of the run.
+The result is a structured research brief that may surface reportable candidates, exploratory hypotheses, or pipeline-reviewed signals, depending on the strength of the run.
 
-Arc provides the escrow and settlement layer, while x402 and Circle Gateway enable paid access to external services through on-demand payment flows without interrupting the core agent orchestration.
+**Arc** provides the escrow and settlement layer, while **x402** and **Circle Gateway** enable paid access to external services through on-demand payment flows without interrupting the core agent orchestration.
 
-This turns fragmented research steps into a coordinated, economically structured workflow, where agent-to-agent actions follow task progression and outputs remain traceable.
+This turns fragmented research steps into a coordinated, economically structured workflow, where **agent-to-agent actions** follow task progression and outputs remain traceable.
 
 ---
 
