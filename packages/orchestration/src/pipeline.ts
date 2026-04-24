@@ -727,64 +727,77 @@ export async function runResearchPipeline(input: {
         : "Evidence scoring did not continue because no shortlist advanced from candidate review"
   });
 
-  logAgentEvent({
-    db,
-    jobId,
-    agentName: "red_team",
-    eventType: "dispatch",
-    message: "Red-team critic dispatch started."
-  });
-  let redTeamResponse;
-  try {
-    redTeamResponse = await runRedTeamReview({
-      query,
-      literature,
-      pathway,
-      repurposing,
-      evidence
-    });
-  } catch (error) {
+  const repurposingHypothesisCount = Array.isArray(repurposing.hypotheses) ? repurposing.hypotheses.length : 0;
+  let redTeam: JsonRecord = {};
+  let redTeamProof: ReturnType<typeof buildPaymentProof> = null;
+  if (repurposingHypothesisCount === 0) {
     logAgentEvent({
       db,
       jobId,
       agentName: "red_team",
-      eventType: "error",
-      message: "Red-team failed before returning a result"
+      eventType: "result",
+      message: "Red-team skipped because candidate review did not produce a shortlist"
     });
-    throw error;
+  } else {
+    logAgentEvent({
+      db,
+      jobId,
+      agentName: "red_team",
+      eventType: "dispatch",
+      message: "Red-team critic dispatch started."
+    });
+    let redTeamResponse;
+    try {
+      redTeamResponse = await runRedTeamReview({
+        query,
+        literature,
+        pathway,
+        repurposing,
+        evidence
+      });
+    } catch (error) {
+      logAgentEvent({
+        db,
+        jobId,
+        agentName: "red_team",
+        eventType: "error",
+        message: "Red-team failed before returning a result"
+      });
+      throw error;
+    }
+    redTeam = asRecord(redTeamResponse.data);
+    const critiqueCount = Array.isArray(redTeam.critiques) ? redTeam.critiques.length : 0;
+    redTeamProof = buildPaymentProof("critics", redTeamResponse);
+    logAgentEvent({
+      db,
+      jobId,
+      agentName: "red_team",
+      eventType: "payment",
+      message: buildPaymentEventMessage(
+        "Critics",
+        redTeamResponse,
+        `Critics nanopayment completed through Gateway for report ${jobId}`
+      ),
+      details: redTeamProof ? { kind: "x402_payment", proof: redTeamProof } : null
+    });
+    recordAgentLedger({
+      db,
+      jobId,
+      agentName: "red_team",
+      payload: redTeam,
+      notes: `critiques=${critiqueCount}`
+    });
+    logAgentEvent({
+      db,
+      jobId,
+      agentName: "red_team",
+      eventType: "result",
+      message:
+        critiqueCount === 0
+          ? "Red-team completed with no critiques for this report"
+          : `Red-team completed: ${critiqueCount} critiques`
+    });
   }
-  const redTeam = asRecord(redTeamResponse.data);
-  const critiqueCount = Array.isArray(redTeam.critiques) ? redTeam.critiques.length : 0;
-  const redTeamProof = buildPaymentProof("critics", redTeamResponse);
-  logAgentEvent({
-    db,
-    jobId,
-    agentName: "red_team",
-    eventType: "payment",
-    message: buildPaymentEventMessage(
-      "Critics",
-      redTeamResponse,
-      `Critics nanopayment completed through Gateway for report ${jobId}`
-    ),
-    details: redTeamProof ? { kind: "x402_payment", proof: redTeamProof } : null
-  });
-  recordAgentLedger({
-    db,
-    jobId,
-    agentName: "red_team",
-    payload: redTeam,
-    notes: `critiques=${critiqueCount}`
-  });
-  logAgentEvent({
-    db,
-    jobId,
-    agentName: "red_team",
-    eventType: "result",
-    message:
-      critiqueCount === 0
-        ? "Red-team completed with no critiques for this report"
-        : `Red-team completed: ${critiqueCount} critiques`
-  });
 
   logAgentEvent({
     db,

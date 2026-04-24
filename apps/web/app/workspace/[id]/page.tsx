@@ -339,7 +339,7 @@ function buildSlowAgentMessage(agentId: string) {
 
 function isNoHitMessage(message?: string) {
   const text = (message || '').toLowerCase();
-  return text.includes('completed with no hit') || text.includes('completed with no critiques');
+  return text.includes('completed with no hit') || text.includes('completed with no critiques') || text.includes('red-team skipped because');
 }
 
 function AgentCard({
@@ -661,6 +661,9 @@ function formatActivityMessage(message: string, eventType: string, agentName?: s
       if (match) return `Evidence -> PI: ${match[1]} candidates scored.`;
     }
     if (agentName === 'red_team') {
+      if (/skipped because candidate review did not produce a shortlist/i.test(message)) {
+        return 'PI skipped Red Team because repurposing did not produce a shortlist.';
+      }
       if (/completed with no critiques/i.test(message)) {
         return 'Red Team -> PI: no challenge notes were generated because no scored shortlist was available.';
       }
