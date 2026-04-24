@@ -353,8 +353,11 @@ Veliora is intentionally selective.
  - exploratory hypotheses or pipeline-reviewed signals that did not advance into the final shortlist
    
 **Pipeline-reviewed signals**
+
 Early mechanism-linked leads surfaced by the literature, drug, pathway, and candidate-review workflow. These are exploratory and are not the same as a final shortlist.
+
 **Red-team challenged candidates**
+
 Stronger candidates that reached the shortlist stage and were stress-tested by the red-team layer before delivery.
 
 ### Reject
