@@ -159,28 +159,6 @@ function getStepDetail(step: Step, createPhase: CreatePhase) {
   return STEP_DETAILS[step];
 }
 
-function getCreateNetworkStatus(stage: CreateNetworkStage, txHash?: string | null) {
-  if (stage === 'wallet_prompt') {
-    return 'Create tx has not been submitted yet. Waiting for wallet confirmation.';
-  }
-  if (stage === 'tx_hash_received') {
-    return `Create tx submitted: ${txHash ?? 'hash pending display'}. Waiting for the network receipt.`;
-  }
-  if (stage === 'waiting_for_receipt') {
-    return `Create tx is on the network${txHash ? ` (${txHash})` : ''}. Waiting for confirmation.`;
-  }
-  if (stage === 'receipt_confirmed') {
-    return 'The create transaction was confirmed. Recovering the JobCreated event now.';
-  }
-  if (stage === 'job_created_decoded') {
-    return 'JobCreated event recovered. Handing off to PI budget setup.';
-  }
-  if (stage === 'setbudget_started') {
-    return 'Job recovered. PI budget setup call has started.';
-  }
-  return '';
-}
-
 export default function Dashboard() {
   const router = useRouter();
   const { address, isConnected } = useAccount();
@@ -194,7 +172,7 @@ export default function Dashboard() {
   const [partialJob, setPartialJob] = useState<PartialJobDebug | null>(null);
   const [pendingCreate, setPendingCreate] = useState<PendingCreate | null>(null);
   const [createPhase, setCreatePhase] = useState<CreatePhase>('wallet_approval');
-  const [createNetworkStage, setCreateNetworkStage] = useState<CreateNetworkStage>('idle');
+  const [, setCreateNetworkStage] = useState<CreateNetworkStage>('idle');
   const [runtimeConfig, setRuntimeConfig] = useState<RuntimeConfig>({
     piAgentAddress: PUBLIC_PI_AGENT_ADDRESS ?? null,
     finalizerAddress: PUBLIC_FINALIZER_ADDRESS ?? null,
@@ -320,23 +298,6 @@ export default function Dashboard() {
       if (timeoutId) clearTimeout(timeoutId);
     };
   }, [address, pendingCreate, publicClient, router]);
-
-  const startCreateRecovery = () => {
-    const createTxHash = partialJob?.createTxHash;
-    const normalizedDisease = disease.trim().replace(/\s+/g, ' ');
-    const normalizedQuery = query.trim().replace(/\s+/g, ' ');
-    if (!createTxHash || !normalizedDisease || !normalizedQuery) return;
-
-    setError(null);
-    setPendingCreate({
-      createTxHash,
-      disease: normalizedDisease,
-      query: normalizedQuery,
-      userType: 'researcher',
-    });
-    setStep('awaiting_confirmation');
-    setCreateNetworkStage('waiting_for_receipt');
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -563,32 +524,6 @@ export default function Dashboard() {
                   {getStepDetail(step, createPhase)}
                 </p>
               )}
-              {getCreateNetworkStatus(createNetworkStage, partialJob?.createTxHash ?? pendingCreate?.createTxHash ?? null) && (
-                <p className="mt-2 pl-7 font-mono text-[11px] leading-5 text-sky-100/80 break-all">
-                  {getCreateNetworkStatus(createNetworkStage, partialJob?.createTxHash ?? pendingCreate?.createTxHash ?? null)}
-                </p>
-              )}
-              {partialJob?.createTxHash && (
-                <div className="mt-3 pl-7 flex flex-wrap gap-3 text-xs">
-                  <a
-                    href={`https://testnet.arcscan.app/tx/${partialJob.createTxHash}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sky-300 hover:text-sky-200 underline"
-                  >
-                    View transaction
-                  </a>
-                  {!pendingCreate && (
-                    <button
-                      type="button"
-                      onClick={startCreateRecovery}
-                      className="text-sky-300 hover:text-sky-200 underline"
-                    >
-                      Recover workspace from tx hash
-                    </button>
-                  )}
-                </div>
-              )}
             </div>
           )}
 
@@ -632,16 +567,6 @@ export default function Dashboard() {
               <p className="mt-1 text-xs leading-5 text-amber-100/85">
                 The create transaction is still pending on-chain, so the workspace cannot be created yet. Do not submit another request while this transaction is pending. If it stays stuck, check your wallet for a speed up or cancel action.
               </p>
-              <div className="mt-3 flex flex-wrap gap-3 text-xs">
-                <a
-                  href={`https://testnet.arcscan.app/tx/${partialJob.createTxHash}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sky-300 hover:text-sky-200 underline"
-                >
-                  View transaction
-                </a>
-              </div>
             </div>
           )}
 

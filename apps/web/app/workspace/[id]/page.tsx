@@ -566,7 +566,7 @@ function formatActivityMessage(message: string, eventType: string, agentName?: s
     eventType === 'complete' &&
     /^Report synthesized and written to reports directory\.?/i.test(message)
   ) {
-    return '';
+    return 'Research brief finalized.';
   }
 
   if (
@@ -686,7 +686,7 @@ function formatActivityMessage(message: string, eventType: string, agentName?: s
       return 'Client funded the escrow on-chain.';
     }
     if (ERC8183_SUBMIT_RE.test(message)) {
-      return 'PI submitted the deliverable on-chain.';
+      return 'Research brief submitted to escrow.';
     }
     if (ERC8183_COMPLETE_RE.test(message)) {
       return 'Peer review completion recorded on-chain.';
