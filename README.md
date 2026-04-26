@@ -59,7 +59,7 @@ These steps are difficult to coordinate economically.
 
 Traditional payment systems:
 - make research actions too expensive,
-- bundle work into opaque ervices,
+- bundle work into opaque services,
 - and provide limited visibility into multi-stage workflows.
 
 This makes it hard to build modular, auditable, and fairly priced research pipelines.
